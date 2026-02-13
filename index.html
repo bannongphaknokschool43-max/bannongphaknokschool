@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="th"> <!-- กำหนดภาษาเป็นภาษาไทย -->
+<head>
+<meta charset="UTF-8"> <!-- กำหนดการเข้ารหัสตัวอักษร -->
+<title>โรงเรียนบ้านหนองผักหนอก</title> <!-- ชื่อเว็บ -->
+
+<!-- ฟอนต์ Kanit -->
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+
+
+
+  /* ===== PR SECTION ===== */
+.pr{
+  padding:70px 20px; /* ระยะห่างด้านใน */
+  text-align:center; /* จัดข้อความกึ่งกลาง */
+}
+
+.pr h3{
+  color:var(--accent); /* ใช้สีตัวแปร accent */
+  font-size:2rem; /* ใช้สีตัวแปร accent */
+  margin-bottom:40px; /* ระยะห่างด้านล่าง */
+}
+
+/* กล่องรวมการ์ดประชาสัมพันธ์ */
+.pr-gallery{
+  max-width:1200px;       /* ความกว้างสูงสุด */
+  margin:auto;            /* จัดกึ่งกลางหน้า */
+  display:grid;           /* ใช้ Grid Layout */
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;               /* ระยะห่างระหว่างการ์ด */
+}
+
+/* การ์ดประชาสัมพันธ์แต่ละรายการ */
+.pr-item{
+  background:var(--box);  /* สีพื้นหลังกล่อง */
+  border-radius:18px;     /* มุมโค้ง */
+  overflow:hidden;        /* ซ่อนส่วนเกิน */
+  transition:.3s;         /* ความนุ่มของเอฟเฟกต์ */
+}
+
+/* เอฟเฟกต์เมื่อชี้เมาส์ */
+.pr-item:hover{
+  transform:translateY(-6px); /* เลื่อนขึ้นเล็กน้อย */
+  box-shadow:0 10px 25px rgba(0,0,0,.4);
+}
+
+/* รูปภาพกิจกรรม */
+.pr-item img{
+  width:100%;
+  height:200px;
+  object-fit:cover;       /* ปรับภาพไม่ให้ยืด */
+}
+
+/* ข้อความอธิบายกิจกรรม */
+.pr-item p{
+  padding:15px;
+  font-size:0.95rem;
+  color:var(--accent);
+}
+
+/* ===== RESET CSS ===== */
+*{ /* รีเซ็ตค่าพื้นฐาน */
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+/* ===== ตัวแปรสี (Theme) ===== */
+:root{ /* โหมดมืด (ค่าเริ่มต้น) */
+  --bg:#000;
+  --box:#111;
+  --text:#fff;
+  --gold:gold;
+  --accent:#ffeb3b;
+}
+
+/* โหมดสว่าง */
+body.light{
+  --bg:#f5f5f5;
+  --box:#fff;
+  --text:#000;
+  --gold:#b8860b;
+  --accent:#ff9800;
+}
+
+/* ===== BODY ===== */
+html,body{
+  font-family:'Kanit',sans-serif; /* ฟอนต์ */
+  background:var(--bg); /* พื้นหลัง */
+  color:var(--text); /* สีตัวอักษร */
+}
+
+/* ===== HEADER ===== */
+header{
+  background:var(--bg);
+  display:flex; /* จัดเรียงแนวนอน */
+  align-items:center; /* จัดกึ่งกลางแนวตั้ง */
+  padding:10px 40px;
+}
+
+header img{
+  width:40px; /* ขนาดโลโก้ */
+  margin-right:10px;
+}
+
+header h1{
+  color:var(--gold); /* สีทอง */
+  font-size:1.2rem;
+}
+
+/* ปุ่มเปลี่ยนโหมดสี */
+.toggle{
+  margin-left:auto; /* ดันไปขวาสุด */
+  cursor:pointer;
+  font-size:1.2rem;
+}
+
+/* ===== NAV ===== */
+nav{
+  background:var(--bg);
+  position:sticky; /* เมนูติดด้านบน */
+  top:0;
+  z-index:999;
+}
+
+nav ul{
+  list-style:none;
+  display:flex;
+  justify-content:center;
+  gap:40px;
+}
+
+nav li{
+  position:relative;
+}
+
+nav a{
+  color:var(--text);
+  text-decoration:none;
+  padding:15px;
+  display:block;
+}
+
+nav a:hover{
+  color:var(--gold);
+}
+
+/* เมนูย่อย */
+.submenu{
+  position:absolute;
+  top:100%;
+  left:0;
+  background:var(--bg);
+  min-width:200px;
+  opacity:0;
+  visibility:hidden;
+  transition:.3s;
+}
+
+.submenu a{
+  padding:10px 15px;
+  color:#ccc;
+}
+
+.submenu a:hover{
+  background:var(--gold);
+  color:#000;
+}
+
+nav li:hover .submenu{
+  opacity:1;
+  visibility:visible;
+}
+
+/* ===== BANNER ===== */
+.banner{
+  width:100%;
+  height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)),
+    url('pic/แบรนเนอร์หนองผักหนอก.png') center/cover no-repeat;
+}
+
+/* ===== CONTENT ===== */
+.content{
+  padding:60px 20px;
+  text-align:center;
+}
+
+.content h3{
+  color:var(--gold);
+  font-size:2rem;
+  margin-bottom:40px;
+}
+
+/* การ์ดผลงาน */
+.cards{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:30px;
+}
+
+.card{
+  width:260px;
+  background:var(--box);
+  border-radius:15px;
+  overflow:hidden;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+}
+
+.card img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
+
+.card p{
+  padding:12px;
+  color:var(--accent);
+}
+
+/* ===== FOOTER (ปรับให้เข้ากับแบนเนอร์) ===== */
+footer{
+  background:
+    linear-gradient(rgba(0,0,0,.85), rgba(0,0,0,.95)),
+    url('pic/แบรนเนอร์หนองผักหนอก.png') center/cover no-repeat;
+  text-align:center;
+  padding:50px 15px 30px;
+  color:#ccc;
+  font-size:.9rem;
+  border-top:2px solid var(--gold);
+}
+
+/* ===== RELATED WEBSITES FOOTER ===== */
+.related-sites{
+  margin-bottom:25px;
+}
+
+.related-sites h4{
+  margin-bottom:20px;
+  color:var(--gold);
+  font-weight:400;
+  letter-spacing:1px;
+}
+
+/* กล่องรวมโลโก้ */
+.related-logos{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:22px;
+  flex-wrap:wrap;
+  max-width:900px;
+  margin:0 auto 20px;
+}
+
+/* กล่องโลโก้ */
+.related-logos a{
+  width:120px;
+  height:75px;
+  background:rgba(255,255,255,.9);
+  border-radius:14px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:.3s;
+}
+
+/* รูปโลโก้ */
+.related-logos a img{
+  max-width:85%;
+  max-height:85%;
+  object-fit:contain;
+  filter:grayscale(100%);
+  transition:.3s;
+}
+
+/* hover */
+.related-logos a:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 25px rgba(0,0,0,.6);
+}
+
+.related-logos a:hover img{
+  filter:grayscale(0%);
+}
+
+/* ข้อความลิขสิทธิ์ */
+footer span{
+  color:var(--gold);
+}
+
+/* มือถือ */
+@media (max-width:600px){
+  footer{
+    padding:40px 10px 25px;
+  }
+  .related-logos a{
+    width:100px;
+    height:65px;
+  }
+  
+}
+
+/* ===== FACEBOOK SECTION ===== */
+.fb-section{
+  padding:100px 20px;
+  background:var(--bg);
+  text-align:center;
+}
+
+.fb-section h3{
+  color:var(--gold);
+  font-size:2rem;
+  margin-bottom:30px;
+}
+
+.fb-box{
+  max-width:420px;
+  margin:auto;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+/* ===== PR LIGHTBOX (ADD ONLY) ===== */
+.pr-item{
+  cursor:pointer;
+}
+
+.pr-lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:3000;
+}
+
+.pr-lightbox img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:14px;
+  box-shadow:0 0 35px rgba(255,255,255,.25);
+}
+
+.pr-lightbox span{
+  position:absolute;
+  top:20px;
+  right:30px;
+  font-size:2rem;
+  color:#fff;
+  cursor:pointer;
+}
+/* ===== MOBILE RESPONSIVE (ADD ONLY) ===== */
+@media (max-width: 768px){
+
+  /* Header */
+  header{
+    padding:10px 20px;
+    flex-wrap:wrap;
+  }
+
+  header h1{
+    font-size:1rem;
+  }
+
+  /* Navbar */
+  nav ul{
+    flex-direction:column;
+    gap:0;
+  }
+
+  nav a{
+    padding:12px;
+    text-align:center;
+  }
+
+  .submenu{
+    position:static;
+    opacity:1;
+    visibility:visible;
+    display:none;
+  }
+
+  nav li:hover .submenu{
+    display:block;
+  }
+
+  /* Banner */
+  .banner{
+    height:60vh;
+  }
+
+  /* PR Section */
+  .pr{
+    padding:50px 15px;
+  }
+
+  .pr h3{
+    font-size:1.6rem;
+  }
+
+  .pr-item img{
+    height:180px;
+  }
+
+  /* Cards */
+  .cards{
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .card{
+    width:100%;
+    max-width:320px;
+  }
+
+  /* Facebook */
+  .fb-section{
+    padding:70px 15px;
+  }
+
+  .fb-box{
+    max-width:100%;
+  }
+
+  /* Footer logos */
+  .related-logos{
+    gap:15px;
+  }
+
+  .related-logos a{
+    width:90px;
+    height:55px;
+  }
+}
+
+
+</style>
+</head>
+
+<!-- ===== PR LIGHTBOX ===== -->
+<div class="pr-lightbox" id="prLightbox">
+  <span onclick="closePR()">✕</span>
+  <img id="prLightboxImg">
+</div>
+
+
+
+<body>
+
+<header>
+  <img src="pic/logo.png"> <!-- โลโก้โรงเรียน -->
+  <h1>โรงเรียนบ้านหนองผักหนอก</h1>
+  <div class="toggle" onclick="toggleMode()">🌙 / ☀️</div> <!-- ปุ่มเปลี่ยนโหมด -->
+</header>
+
+<nav>
+<ul>
+    <li>
+      <a href="#">หน้าแรก ▾</a>
+      <div class="submenu">
+        <a href="index2.html">ประวัติโรงเรียน</a>
+        <a href="index3.html">วิสัยทัศน์ / สีประจำโรงเรียน</a>
+        <a href="index4.html">ผังโรงเรียน / อาคาร</a>
+        <a href="index5.html">เพลงมาร์ชประจำโรงเรียน</a>
+        <a href="index6.html">ผังองค์กร</a>
+      </div>
+    </li>
+
+    <li>
+      <a href="index7.html">โครงสร้างบริหารงาน ▾</a>
+      <div class="submenu">
+
+      </div>
+    </li>
+    <li>
+      <a href="#">บุคลากร ▾</a>
+      <div class="submenu">
+        <a href="index8.html">ฝ่ายบริหาร</a>
+        <a href="index9.html">ครูผู้สอน</a>
+        <a href="index10.html">รายชื่อคณะกรรมการการศึกษาขั้นพื้นฐานโรงเรียนบ้านหนองผักหนอก</a>
+      </div>
+    </li>
+
+    <li>
+      <a href="#">ข้อมูลนักเรียน ▾</a>
+      <div class="submenu">
+        <a href="index11.html">อนุบาล</a>
+        <a href="index12.html">ประถม</a>
+        <a href="index13.html">มัธยม</a>
+      </div>
+    </li>
+
+    <li>
+      <a href="#">ผลงานความภาคภูมิใจ ▾</a>
+      <div class="submenu">
+        <a href="index14.html">ผลงานนักเรียน</a>
+        <a href="index16.html">ผลงานครู</a>
+        <a href="#">รางวัล</a>
+      </div>
+    </li>
+    <li>
+      <a href="#"> Dowload </a>
+      <div class="submenu">
+        <a href="index15.html">ตารางเรียน</a>
+        <a href="index17.html">ตราโรงเรียนบ้านหนองผักหนอก</a>
+      </div>
+    </li>
+    <li><a href="https://www.facebook.com/profile.php?id=100057577894346&locale=th_TH">ติดต่อ</a></li>
+  </ul>
+</nav>
+
+
+<section class="banner"></section>
+<section class="pr">
+  <h3>ประชาสัมพันธ์</h3>
+
+  <div class="pr-gallery">
+    <div class="pr-item">
+      <img src="pic/กิจกรรม1.jpg" alt="กิจกรรมโรงเรียน">
+      <p>กิจกรรมส่งเสริมคุณธรรม จริยธรรมให้แก่นักเรียน</p>
+    </div>
+
+    <div class="pr-item">
+      <img src="pic/กิจการแข่งกีฬา.jpg" alt="การแข่งขัน">
+      <p>แข่งขัน “กีฬากาบัดดี้” ในการแข่งขันกีฬาเยาวชนแห่งชาติ ครั้งที่ ๔๑ “อ่างทองเกมส์”</p>
+    </div>
+
+    <div class="pr-item">
+      <img src="pic/กิจกรรมsand.jpg" alt="อบรม">
+      <p>สระบุรีแซนด์บ็อกซ์ รวมพลังสร้างเมืองคาร์บอนต่ำแห่งแรกของประเทศไทย”</p>
+    </div>
+
+    <div class="pr-item">
+      <img src="pic/กิจกรรมสอบ.jpg" alt="จิตอาสา">
+      <p>ดำเนินการทดสอบระบบ Digital Testing เพื่อเตรียมความพร้อมในการจัดการสอบ O-NET ระดับชั้นมัธยมศึกษาปีที่ ๓ ตามนโยบายการยกระดับการประเมินผลทางการศึกษาสู่ระบบดิจิทัล</p>
+    </div>
+    <div class="pr-item">
+      <img src="pic/กิจกรรมสอบ.jpg" alt="จิตอาสา">
+      <p>ดำเนินการทดสอบระบบ Digital Testing เพื่อเตรียมความพร้อมในการจัดการสอบ O-NET ระดับชั้นมัธยมศึกษาปีที่ ๓ ตามนโยบายการยกระดับการประเมินผลทางการศึกษาสู่ระบบดิจิทัล</p>
+    </div>
+    <div class="pr-item">
+      <img src="pic/กิจกรรมสอบ.jpg" alt="จิตอาสา">
+      <p>ดำเนินการทดสอบระบบ Digital Testing เพื่อเตรียมความพร้อมในการจัดการสอบ O-NET ระดับชั้นมัธยมศึกษาปีที่ ๓ ตามนโยบายการยกระดับการประเมินผลทางการศึกษาสู่ระบบดิจิทัล</p>
+    </div>
+    <div class="pr-item">
+      <img src="pic/กิจกรรมสอบ.jpg" alt="จิตอาสา">
+      <p>ดำเนินการทดสอบระบบ Digital Testing เพื่อเตรียมความพร้อมในการจัดการสอบ O-NET ระดับชั้นมัธยมศึกษาปีที่ ๓ ตามนโยบายการยกระดับการประเมินผลทางการศึกษาสู่ระบบดิจิทัล</p>
+    </div>
+    <div class="pr-item">
+      <img src="pic/กิจกรรมสอบ.jpg" alt="จิตอาสา">
+      <p>ดำเนินการทดสอบระบบ Digital Testing เพื่อเตรียมความพร้อมในการจัดการสอบ O-NET ระดับชั้นมัธยมศึกษาปีที่ ๓ ตามนโยบายการยกระดับการประเมินผลทางการศึกษาสู่ระบบดิจิทัล</p>
+    </div>   
+  </div>
+</section>
+<section class="fb-section">
+  <h3>ข่าวสารจาก Facebook</h3>
+
+  <div class="fb-box">
+    <iframe
+  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100057577894346&tabs=timeline&width=420&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+  width="100%"
+  height="500"
+  style="border:none;overflow:hidden"
+  scrolling="yes"
+  frameborder="0"
+  allowfullscreen="true"
+  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+</iframe>
+
+  </div>
+</section>
+
+
+
+<!-- ===== SCRIPT เปลี่ยนโหมดสี ===== -->
+<script>
+function toggleMode(){ 
+  document.body.classList.toggle('light'); /* สลับโหมดสี */
+}
+
+</script>
+<script>
+/* ===== PR LIGHTBOX SCRIPT ===== */
+document.querySelectorAll('.pr-item img').forEach(img=>{
+  img.addEventListener('click',function(e){
+    e.stopPropagation();
+    document.getElementById('prLightbox').style.display='flex';
+    document.getElementById('prLightboxImg').src=this.src;
+  });
+});
+
+function closePR(){
+  document.getElementById('prLightbox').style.display='none';
+}
+</script>
+
+
+
+
+<footer>
+  <div class="related-sites">
+    <h4>เว็บไซต์ที่เกี่ยวข้อง</h4>
+    <div class="related-logos">
+      <a href="https://www.moe.go.th" target="_blank">
+        <img src="pic/กระทรวงศึกษาธิการ.jpg" alt="กระทรวงศึกษาธิการ">
+      </a>
+      <a href="https://www.obec.go.th" target="_blank">
+        <img src="pic/สำนักงาน.webp" alt="สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน">
+      </a>
+      <a href="https://www.vec.go.th" target="_blank">
+        <img src="pic1/สำนักงาน.jpg" alt="สำนักงานคณะกรรมการการอาชีวศึกษา">
+      </a>
+     
+    </div>
+  </div>
+
+  © 2025 <span>โรงเรียนบ้านหนองผักหนอก</span> | พัฒนาโดยนักเรียน ปวส. วิทยาลัยเทคนิคมวกเหล็ก
+</footer>
+
+
+</body>
+
+</html>
